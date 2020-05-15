@@ -1,2 +1,2 @@
 # -v1.0
-SpringBoot+Mybatis+H-ui
+智能排课系统 SpringBoot+Mybatis+H-ui
