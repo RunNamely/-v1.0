@@ -1,0 +1,118 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.newsoft.dao.ITeacherDao">
+	<!-- 按条件查找数据 -->
+	<select id="findTeacher" resultType="Teacher">
+		select * from teachertb
+		<where>
+				<if test="TeacherId!=null">
+					and TeacherId=#{TeacherId}
+				</if>
+				<if test="TeacherCode!=null">
+					and TeacherCode=#{TeacherCode}
+				</if>
+				<if test="TeacherName!=null">
+					and TeacherName=#{TeacherName}
+				</if>
+				<if test="DepartmentId!=null">
+					and DepartmentId=#{DepartmentId}
+				</if>
+				<if test="MajorStr!=null">
+					and MajorStr=#{MajorStr}
+				</if>
+				<if test="TeacherTitle!=null">
+					and TeacherTitle=#{TeacherTitle}
+				</if>
+				<if test="Age!=null">
+					and Age=#{Age}
+				</if>
+				<if test="Sex!=null">
+					and Sex=#{Sex}
+				</if>
+				<if test="Describe!=null">
+					and Describe=#{Describe}
+				</if>
+				<if test="DeleteFlag!=null">
+					and DeleteFlag=#{DeleteFlag}
+				</if>
+				<if test="birth!=null">
+					and birth=#{birth}
+				</if>
+		</where>
+	</select>
+	<!-- 插入数据 -->
+	<insert id="addTeacher" parameterType="Teacher">
+        <selectKey keyProperty="TeacherId" resultType="int">
+			select
+			LAST_INSERT_ID()
+		</selectKey>
+		insert into teachertb values(#{TeacherId},#{TeacherCode},#{TeacherName},#{DepartmentId},#{MajorStr},
+		#{TeacherTitle},#{Age},#{Sex},#{Describe},#{DeleteFlag},#{birth})
+	</insert>
+	<!-- 删除数据 -->
+	<delete id="removeTeacher" parameterType="Teacher">
+		delete from teachertb 
+			<where>
+			TeacherId = #{TeacherId}
+			</where>
+	</delete>
+	<!-- 批量删除 -->
+	<delete id="deleteTeacher" parameterType="list">
+		delete from teachertb where TeacherId in 
+		<foreach collection="list" item="TeacherId" open="(" close=")" separator=",">
+		#{TeacherId}
+	</foreach>
+	</delete>
+	<!-- 更新数据 -->
+	<update id="updateTeacher" parameterType="Teacher">
+		update teachertb
+		<set>
+				<if test="TeacherCode!=null">
+					TeacherCode=#{TeacherCode}
+				</if>
+				<if test="TeacherName!=null">
+					,TeacherName=#{TeacherName}
+				</if>
+				<if test="DepartmentId!=null and DepartmentId !=''">
+					,DepartmentId=#{DepartmentId}
+				</if>
+				<if test="MajorStr!=null">
+					,MajorStr=#{MajorStr}
+				</if>
+				<if test="TeacherTitle!=null">
+					,TeacherTitle=#{TeacherTitle}
+				</if>
+				<if test="Age!=null and Age !=''">
+					,Age=#{Age}
+				</if>
+				<if test="Sex!=null">
+					,Sex=#{Sex}
+				</if>
+				<if test="Describe!=null">
+					,Describe=#{Describe}
+				</if>
+				<if test="DeleteFlag!=null">
+					,DeleteFlag=#{DeleteFlag}
+				</if>
+				<if test="birth!=null">
+					,birth=#{birth}
+				</if>
+		</set>
+		<where>
+			TeacherId = #{TeacherId}
+		</where>
+	</update>
+	<!-- 按条件模糊查找数据 -->
+	<select id="findLikeTeacher" resultType="Teacher">
+		select * from teachertb
+		<where>
+				<if test="TeacherTitle!=null">
+				    TeacherTitle =#{TeacherTitle}
+				</if>
+				<if test="TeacherName!=null">
+					and TeacherName like CONCAT('%',#{TeacherName},'%') 
+				</if>
+		</where>
+	</select>
+</mapper>	

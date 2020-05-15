@@ -1,0 +1,91 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.newsoft.dao.ICourseDao">
+	<!-- 按条件查找数据 -->
+	<select id="findCourse" resultType="Course">
+		select * from coursetb
+		<where>
+				<if test="CourseId!=null">
+					and CourseId=#{CourseId}
+				</if>
+				<if test="CourseCode!=null">
+					and CourseCode=#{CourseCode}
+				</if>
+				<if test="CourseName!=null">
+					and CourseName=#{CourseName}
+				</if>
+				<if test="CourseType!=null">
+					and CourseType=#{CourseType}
+				</if>
+				<if test="CourseLesson!=null">
+					and CourseLesson=#{CourseLesson}
+				</if>
+				<if test="RoomTypeId!=null">
+					and RoomTypeId=#{RoomTypeId}
+				</if>
+		</where>
+	</select>
+	<!-- 插入数据 -->
+	<insert id="addCourse" parameterType="Course">
+        <selectKey keyProperty="CourseId" resultType="int">
+			select
+			LAST_INSERT_ID()
+		</selectKey>
+		insert into coursetb values(#{CourseId},#{CourseCode},#{CourseName},#{CourseType},#{CourseLesson},
+		#{RoomTypeId})
+	</insert>
+	<!-- 删除数据 -->
+	<delete id="removeCourse" parameterType="Course">
+		delete from coursetb 
+			<where>
+			CourseId = #{CourseId}
+			</where>
+	</delete>
+	<!-- 批量删除 -->
+	<delete id="deleteCourse" parameterType="list">
+		delete from coursetb where CourseId in 
+		<foreach collection="list" item="CourseId" open="(" close=")" separator=",">
+		#{CourseId}
+	</foreach>
+	</delete>
+	<!-- 更新数据 -->
+	<update id="updateCourse" parameterType="Course">
+		update coursetb
+		<set>
+				<if test="CourseCode!=null">
+					CourseCode=#{CourseCode}
+				</if>
+				<if test="CourseName!=null">
+					,CourseName=#{CourseName}
+				</if>
+				<if test="CourseType!=null">
+					,CourseType=#{CourseType}
+				</if>
+				<if test="CourseLesson!=null">
+					,CourseLesson=#{CourseLesson}
+				</if>
+				<if test="RoomTypeId!=null">
+					,RoomTypeId=#{RoomTypeId}
+				</if>
+		</set>
+		<where>
+			CourseId = #{CourseId}
+		</where>
+	</update>
+	<!-- 按条件模糊查找数据 -->
+	<select id="findLikeCourse" resultType="Course">
+		select * from coursetb
+		<where>
+				<if test="CourseType!= null and CourseType!=''">
+				    CourseType = #{CourseType} 
+				</if>
+				<if test="RoomTypeId!=null and RoomTypeId!=''">
+					and RoomTypeId = #{RoomTypeId}
+				</if>
+				<if test="CourseName!=null and CourseName!=''">
+					and CourseName like CONCAT('%',#{CourseName},'%') 
+				</if>
+		</where>
+	</select>
+</mapper>	

@@ -1,0 +1,100 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.newsoft.dao.IClassroomDao">
+	<!-- 按条件查找数据 -->
+	<select id="findClassroom" resultType="Classroom">
+		select * from classroomtb
+		<where>
+				<if test="CRoomId!=null">
+					and CRoomId=#{CRoomId}
+				</if>
+				<if test="CRoomCode!=null">
+					and CRoomCode=#{CRoomCode}
+				</if>
+				<if test="CRoomName!=null">
+					and CRoomName=#{CRoomName}
+				</if>
+				<if test="CAreaId!=null">
+					and CAreaId=#{CAreaId}
+				</if>
+				<if test="RoomTypeId!=null">
+					and RoomTypeId=#{RoomTypeId}
+				</if>
+				<if test="DepartmentId!=null">
+					and DepartmentId=#{DepartmentId}
+				</if>
+				<if test="CRoomSeatingCapacity!=null">
+					and CRoomSeatingCapacity=#{CRoomSeatingCapacity}
+				</if>
+				<if test="DeleteFlag!=null and DleeteFlag!=''">
+					and DeleteFlag=#{DeleteFlag}
+				</if>
+		</where>
+	</select>
+	<!-- 插入数据 -->
+	<insert id="addClassroom" parameterType="Classroom">
+        <selectKey keyProperty="CRoomId" resultType="int">
+			select
+			LAST_INSERT_ID()
+		</selectKey>
+		insert into classroomtb values(#{CRoomId},#{CRoomCode},#{CRoomName},#{CAreaId},#{RoomTypeId},
+		#{DepartmentId},#{CRoomSeatingCapacity},#{DeleteFlag})
+	</insert>
+	<!-- 删除数据 -->
+	<delete id="removeClassroom" parameterType="Classroom">
+		delete from classroomtb 
+			<where>
+			CRoomId = #{CRoomId}
+			</where>
+	</delete>
+	<!-- 批量删除 -->
+	<delete id="deleteClassroom" parameterType="list">
+		delete from classroomtb where CRoomId in 
+		<foreach collection="list" item="CRoomId" open="(" close=")" separator=",">
+		#{CRoomId}
+	</foreach>
+	</delete>
+	<!-- 更新数据 -->
+	<update id="updateClassroom" parameterType="Classroom">
+		update classroomtb
+		<set>
+				<if test="CRoomCode!=null">
+					CRoomCode=#{CRoomCode}
+				</if>
+				<if test="CRoomName!=null">
+					,CRoomName=#{CRoomName}
+				</if>
+				<if test="CAreaId!=null">
+					,CAreaId=#{CAreaId}
+				</if>
+				<if test="RoomTypeId!=null">
+					,RoomTypeId=#{RoomTypeId}
+				</if>
+				<if test="DepartmentId!=null">
+					,DepartmentId=#{DepartmentId}
+				</if>
+				<if test="CRoomSeatingCapacity!=null">
+					,CRoomSeatingCapacity=#{CRoomSeatingCapacity}
+				</if>
+				<if test="DeleteFlag=!null and DleeteFlag=!''">
+					,DeleteFlag=#{DeleteFlag}
+				</if>
+		</set>
+		<where>
+			CRoomId = #{CRoomId}
+		</where>
+	</update>
+	<!-- 按条件模糊查找数据 -->
+	<select id="findLikeClassroom" resultType="Classroom">
+		select * from classroomtb
+		<where>
+				<if test="likename!=null">
+				    CRoomCode like CONCAT('%',#{likename},'%') 
+				</if>
+				<if test="likename!=null">
+					or CRoomName like CONCAT('%',#{likename},'%') 
+				</if>
+		</where>
+	</select>
+</mapper>	

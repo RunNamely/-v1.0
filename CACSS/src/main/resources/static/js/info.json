@@ -1,0 +1,44 @@
+{
+	"information1": {
+		"id":1,
+		"flag":0,
+		"creatTime":"2019-9-18 14:54",
+		"creatUserid": 201601,
+		"updateTime":"2019-9-18 14:54" ,
+		"updateUserid": 201601,
+		"equipmentSeq":2051,
+		"equipmentName":"挖掘机",
+		"equipmentImgUrl":"temp/wjj.png",
+		"equipmentStatus":10,
+		"factoryId":52001
+		
+	},
+	"information2": {
+		"id":2,
+		"flag":0,
+		"creatTime":"2019-9-18 14:54",
+		"creatUserid": 201601,
+		"updateTime":"2019-9-18 14:54" ,
+		"updateUserid": 201601,
+		"equipmentSeq":2052,
+		"equipmentName":"挖掘机",
+		"equipmentImgUrl":"temp/wjj.png",
+		"equipmentStatus":30,
+		"factoryId":52001
+		
+	},
+	"information3": {
+		"id":3,
+		"flag":0,
+		"creatTime":"2019-9-18 14:54",
+		"creatUserid": 201601,
+		"updateTime":"2019-9-18 14:54" ,
+		"updateUserid": 201601,
+		"equipmentSeq":2053,
+		"equipmentName":"挖掘机",
+		"equipmentImgUrl":"temp/wjj.png",
+		"equipmentStatus":20,
+		"factoryId":52001
+		
+	}
+}

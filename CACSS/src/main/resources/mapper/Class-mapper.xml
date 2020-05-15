@@ -1,0 +1,112 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.newsoft.dao.IClassDao">
+	<!-- 按条件查找数据 -->
+	<select id="findClass" resultType="Class">
+		select * from classtb
+		<where>
+				<if test="ClassId!=null">
+					and ClassId=#{ClassId}
+				</if>
+				<if test="ClassCode!=null">
+					and ClassCode=#{ClassCode}
+				</if>
+				<if test="ClassName!=null">
+					and ClassName=#{ClassName}
+				</if>
+				<if test="ClassSize!=null">
+					and ClassSize=#{ClassSize}
+				</if>
+				<if test="DepartmentId!=null">
+					and DepartmentId=#{DepartmentId}
+				</if>
+				<if test="MajorId!=null">
+					and MajorId=#{MajorId}
+				</if>
+				<if test="Describe!=null">
+					and Describe=#{Describe}
+				</if>
+				<if test="DeleteFlag!=null">
+					and DeleteFlag=#{DeleteFlag}
+				</if>
+				<if test="InYear!=null">
+					and InYear=#{InYear}
+				</if>
+				<if test="CAreaId!=null and CAreaId!=''">
+					and CAreaId=#{CAreaId}
+				</if>
+		</where>
+	</select>
+	<!-- 插入数据 -->
+	<insert id="addClass" parameterType="Class">
+        <selectKey keyProperty="ClassId" resultType="int">
+			select
+			LAST_INSERT_ID()
+		</selectKey>
+		insert into classtb values(#{ClassId},#{ClassCode},#{ClassName},#{ClassSize},#{DepartmentId},
+		#{MajorId},#{Describe},#{DeleteFlag},#{InYear},#{CAreaId})
+	</insert>
+	<!-- 删除数据 -->
+	<delete id="removeClass" parameterType="Class">
+		delete from classtb 
+			<where>
+			ClassId = #{ClassId}
+			</where>
+	</delete>
+	<!-- 批量删除 -->
+	<delete id="deleteClass" parameterType="list">
+		delete from classtb where ClassId in 
+		<foreach collection="list" item="ClassId" open="(" close=")" separator=",">
+		#{ClassId}
+	</foreach>
+	</delete>
+	<!-- 更新数据 -->
+	<update id="updateClass" parameterType="Class">
+		update classtb
+		<set>
+				<if test="ClassCode!=null">
+					ClassCode=#{ClassCode}
+				</if>
+				<if test="ClassName!=null">
+					,ClassName=#{ClassName}
+				</if>
+				<if test="ClassSize!=null">
+					,ClassSize=#{ClassSize}
+				</if>
+				<if test="DepartmentId!=null">
+					,DepartmentId=#{DepartmentId}
+				</if>
+				<if test="MajorId!=null">
+					,MajorId=#{MajorId}
+				</if>
+				<if test="Describe!=null">
+					,Describe=#{Describe}
+				</if>
+				<if test="DeleteFlag!=null">
+					,DeleteFlag=#{DeleteFlag}
+				</if>
+				<if test="InYear!=null">
+					,InYear=#{InYear}
+				</if>
+				<if test="CAreaId!=null and CAreaId!=''">
+					,CAreaId=#{CAreaId}
+				</if>
+		</set>
+		<where>
+			ClassId = #{ClassId}
+		</where>
+	</update>
+	<!-- 按条件模糊查找数据 -->
+	<select id="findLikeClass" resultType="Class">
+		select * from classtb
+		<where>
+				<if test="likename!=null">
+				    ClassCode like CONCAT('%',#{likename},'%') 
+				</if>
+				<if test="likename!=null">
+					or ClassName like CONCAT('%',#{likename},'%') 
+				</if>
+		</where>
+	</select>
+</mapper>	
